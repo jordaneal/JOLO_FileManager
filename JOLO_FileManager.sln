@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JOLO_FileManager", "JOLO_Fi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileManagerTest", "FileManagerTest\FileManagerTest.csproj", "{269C91D2-E4F0-4959-B06D-7EC7A12C603F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarness", "TestHarness\TestHarness.csproj", "{846D7FC4-EF39-4F40-96B4-DAB191BF5CEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestHarness", "TestHarness\TestHarness.csproj", "{846D7FC4-EF39-4F40-96B4-DAB191BF5CEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,16 +15,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{391CEE19-1479-40F5-91DA-1A9DA2FF55EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{391CEE19-1479-40F5-91DA-1A9DA2FF55EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{391CEE19-1479-40F5-91DA-1A9DA2FF55EA}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{391CEE19-1479-40F5-91DA-1A9DA2FF55EA}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{391CEE19-1479-40F5-91DA-1A9DA2FF55EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{391CEE19-1479-40F5-91DA-1A9DA2FF55EA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{269C91D2-E4F0-4959-B06D-7EC7A12C603F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{269C91D2-E4F0-4959-B06D-7EC7A12C603F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{269C91D2-E4F0-4959-B06D-7EC7A12C603F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{269C91D2-E4F0-4959-B06D-7EC7A12C603F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{846D7FC4-EF39-4F40-96B4-DAB191BF5CEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{846D7FC4-EF39-4F40-96B4-DAB191BF5CEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{846D7FC4-EF39-4F40-96B4-DAB191BF5CEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{846D7FC4-EF39-4F40-96B4-DAB191BF5CEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
