@@ -42,7 +42,7 @@
             this.btnChooseFile.TabIndex = 0;
             this.btnChooseFile.Text = "Choose File";
             this.btnChooseFile.UseVisualStyleBackColor = false;
-            this.btnChooseFile.Click += new System.EventHandler(this.btnChooseFile_Click);
+            this.btnChooseFile.Click += new System.EventHandler(this.BtnChooseFile_Click);
             // 
             // MainForm
             // 

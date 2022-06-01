@@ -7,12 +7,7 @@ namespace JOLO_FileManager
         public string FilePath { get; set; }
         public FileManager(string filePath)
         {
-            if (filePath == null)
-            {
-                throw new ArgumentNullException(nameof(filePath));
-            }
-
-            FilePath = filePath;
+            FilePath = filePath ?? throw new ArgumentNullException(nameof(filePath));
         }
         public bool FileExists()
         {
@@ -75,7 +70,7 @@ namespace JOLO_FileManager
                 $"Is Read Only: {fileInfo.IsReadOnly}\n" +
                 $"Last Changed: {fileInfo.LastWriteTime}";
         }
-        private int[] GetVowelCounts(string allText, out int[] vowelCounts)
+        public static int[] GetVowelCounts(string allText, out int[] vowelCounts)
         {
             vowelCounts = new int[6]; // Store the 6 vowels 0-5 alphabetically
             char[] vowels = { 'a', 'e', 'i', 'o', 'u', 'y' };
@@ -93,7 +88,7 @@ namespace JOLO_FileManager
             }
             return vowelCounts;
         }
-        private string GetVowelOutputs(int[] vowelCounts)
+        public static string GetVowelOutputs(int[] vowelCounts)
         {
             StringBuilder sb = new();
             string[] vowels = { "A", "E", "I", "O", "U", "Y" };

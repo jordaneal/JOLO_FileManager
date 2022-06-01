@@ -1,4 +1,4 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using JOLO_FileManager;
 using System.IO;
 using System;
@@ -8,9 +8,6 @@ namespace FileManagerTest
     [TestClass]
     public class Tests
     {
-        // THE VOWEL TESTS ARE COMMENTED OUT BELOW. FOR 100% COVERAGE,
-        // THE METHODS IN FILEMANAGER WILL NEED TO BE MADE PUBLIC/STATIC
-
         private static string? _filePath = null;
         private static string? _filePathTwo = null;
         private static string? _emptyDIR = null;
@@ -20,7 +17,7 @@ namespace FileManagerTest
         {
             _filePath = Path.Combine(
                 Directory.GetParent(Directory.GetCurrentDirectory()) // dir
-                .Parent.Parent.Parent.ToString(), 
+                .Parent.Parent.Parent.ToString(),
                 @"Files\",                                           // folder
                 context.Properties["LargestFile"].ToString()!);      // name
 
@@ -34,6 +31,34 @@ namespace FileManagerTest
                 Directory.GetParent(Directory.GetCurrentDirectory()) // dir
                 .Parent.Parent.Parent.ToString(),
                 @"Files\Empty\");                                    // folder
+        }
+        [TestMethod]
+        public void GetVowelOutputALLONES()
+        {
+            int[] allOnes = { 1, 1, 1, 1, 1, 1 };
+            Assert.AreEqual("1 A, 1 E, 1 I, 1 O, 1 U, 1 Y",
+                FileManager.GetVowelOutputs(allOnes));
+        }
+        [TestMethod]
+        public void GetVowelOutputALLNINES()
+        {
+            int[] allNines = { 9, 9, 9, 9, 9, 9 };
+            Assert.AreEqual("9 As, 9 Es, 9 Is, 9 Os, 9 Us, 9 Ys",
+                FileManager.GetVowelOutputs(allNines));
+
+        }
+        [TestMethod]
+        public void GetVowelCountALLZEROS()
+        {
+            int[] allZeros = { 0, 0, 0, 0, 0, 0 };
+            CollectionAssert.AreEqual(allZeros, FileManager.GetVowelCounts("", out _));
+        }
+        [TestMethod]
+        public void GetVowelCountALLTHREES()
+        {
+            int[] allThrees = { 3, 3, 3, 3, 3, 3 };
+            CollectionAssert.AreEqual(allThrees,
+                FileManager.GetVowelCounts("aaaeeeiiiooouuuyyy", out _));
         }
         [TestMethod]
         public void EmptyFolderPASS()
@@ -88,7 +113,7 @@ namespace FileManagerTest
         public void VowelWeightNOTTXTFILE()
         {
             FileManager fm = new("");
-            Assert.AreEqual("0 As, 0 Es, 0 Is, 0 Os, 0 Us, 0 Ys", 
+            Assert.AreEqual("0 As, 0 Es, 0 Is, 0 Os, 0 Us, 0 Ys",
                 fm.VowelWeight());
         }
         [TestMethod]
@@ -119,15 +144,8 @@ namespace FileManagerTest
         [TestMethod]
         public void GetByteArrayPass()
         {
-          FileManager fm = new(_filePath!);
-         Assert.IsInstanceOfType(fm.GetByteArray(),typeof(byte[]));
-        }
-        [TestMethod]
-        public void GetByteArrayFail()
-        {
-
             FileManager fm = new(_filePath!);
-            Assert.IsNotInstanceOfType("fail", typeof(byte[]));
+            Assert.IsInstanceOfType(fm.GetByteArray(), typeof(byte[]));
         }
         [TestMethod]
         public void ToStringTEST()
@@ -136,37 +154,5 @@ namespace FileManagerTest
             string output = fm.ToString();
             Assert.IsNotNull(output);
         }
-
-        // Methods below require scoping change in FileManager, scoped for release build
-        // change methods in FM to public/static for testing
-
-        //[TestMethod]
-        //public void GetVowelOutputALLONES()
-        //{
-        //    int[] allOnes = { 1, 1, 1, 1, 1, 1 };
-        //    Assert.AreEqual("1 A, 1 E, 1 I, 1 O, 1 U, 1 Y",
-        //        FileManager.GetVowelOutputs(allOnes));
-        //}
-        //[TestMethod]
-        //public void GetVowelOutputALLNINES()
-        //{
-        //    int[] allNines = { 9, 9, 9, 9, 9, 9 };
-        //    Assert.AreEqual("9 As, 9 Es, 9 Is, 9 Os, 9 Us, 9 Ys",
-        //        FileManager.GetVowelOutputs(allNines));
-
-        //}
-        //[TestMethod]
-        //public void GetVowelCountALLZEROS()
-        //{
-        //    int[] allZeros = { 0, 0, 0, 0, 0, 0 };
-        //    CollectionAssert.AreEqual(allZeros, FileManager.GetVowelCounts("", out int[] count));
-        //}
-        //[TestMethod]
-        //public void GetVowelCountALLTHREES()
-        //{
-        //    int[] allThrees = { 3, 3, 3, 3, 3, 3 };
-        //    CollectionAssert.AreEqual(allThrees,
-        //        FileManager.GetVowelCounts("aaaeeeiiiooouuuyyy", out int[] count));
-        //}
     }
 }
