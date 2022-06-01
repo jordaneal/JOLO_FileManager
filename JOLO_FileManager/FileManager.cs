@@ -71,11 +71,7 @@ namespace JOLO_FileManager
                 $"Is Read Only: {fileInfo.IsReadOnly}\n" +
                 $"Last Changed: {fileInfo.LastWriteTime}";
         }
-
-        // The methods below are only public/static for ease of testing
-        // Will return to private / non-static when release build is made
-
-        public static int[] GetVowelCounts(string allText)
+        private int[] GetVowelCounts(string allText)
         {
             int[] vowelCounts = new int[6]; // Store the 6 vowels 0-5 alphabetically
 
@@ -108,7 +104,7 @@ namespace JOLO_FileManager
             }
             return vowelCounts;
         }
-        public static string GetVowelOutputs(int[] vowelCounts)
+        private string GetVowelOutputs(int[] vowelCounts)
         {
             StringBuilder sb = new();
 
