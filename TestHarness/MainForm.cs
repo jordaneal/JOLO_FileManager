@@ -14,7 +14,7 @@ namespace TestHarness
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
-                ofd.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                ofd.Filter = "All files (*.*)|*.*|txt files (*.txt)|*.txt";
                 ofd.FilterIndex = 0;
                 ofd.Multiselect = false;
                 DialogResult = ofd.ShowDialog();
