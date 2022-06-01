@@ -4,8 +4,7 @@ namespace JOLO_FileManager
 {
     public class FileManager
     {
-        public string? FilePath { get; set; }
-
+        public string FilePath { get; set; }
         public FileManager(string filePath)
         {
             if (filePath == null)
@@ -26,6 +25,12 @@ namespace JOLO_FileManager
         public string LargestFileInCurrentDirectory()
         {
             FileInfo[] files = Directory.GetParent(FilePath!).GetFiles();
+
+            if (files.Length == 0)
+            {
+                return "No files in DIR";
+            }
+
             FileInfo largestFile = files[0]; 
 
             for (int i = 0; i < files.Length; i++)
@@ -39,14 +44,13 @@ namespace JOLO_FileManager
         }
         public string VowelWeight()
         {
-            // If not .txt return all 0's
+            // If not .txt, return all 0's
             if (Path.GetExtension(FilePath) != ".txt") 
             {
                 return "0 As, 0 Es, 0 Is, 0 Os, 0 Us, 0 Ys";
             }
             // Count vowels (Method Below)
-            int[] vowelCounts = GetVowelCounts(
-                File.ReadAllText(FilePath!)); // Whole .txt doc => String
+             GetVowelCounts(File.ReadAllText(FilePath!).ToLower(), out int[] vowelCounts);
             // Output vowels in correct format (Method Below)
             return GetVowelOutputs(vowelCounts);
         }
@@ -71,35 +75,20 @@ namespace JOLO_FileManager
                 $"Is Read Only: {fileInfo.IsReadOnly}\n" +
                 $"Last Changed: {fileInfo.LastWriteTime}";
         }
-        private int[] GetVowelCounts(string allText)
+        private int[] GetVowelCounts(string allText, out int[] vowelCounts)
         {
-            int[] vowelCounts = new int[6]; // Store the 6 vowels 0-5 alphabetically
+            vowelCounts = new int[6]; // Store the 6 vowels 0-5 alphabetically
+            char[] vowels = { 'a', 'e', 'i', 'o', 'u', 'y' };
 
             for (int i = 0; i < allText.Length; i++)
             {
-                if (allText[i].ToString().ToLower() == "a")
+                for (int j = 0; j < vowels.Length; j++)
                 {
-                    vowelCounts[0]++;
-                }
-                if (allText[i].ToString().ToLower() == "e")
-                {
-                    vowelCounts[1]++;
-                }
-                if (allText[i].ToString().ToLower() == "i")
-                {
-                    vowelCounts[2]++;
-                }
-                if (allText[i].ToString().ToLower() == "o")
-                {
-                    vowelCounts[3]++;
-                }
-                if (allText[i].ToString().ToLower() == "u")
-                {
-                    vowelCounts[4]++;
-                }
-                if (allText[i].ToString().ToLower() == "y")
-                {
-                    vowelCounts[5]++;
+                    if (allText[i] == vowels[j])
+                    {
+                        vowelCounts[j]++;
+                        break;
+                    }
                 }
             }
             return vowelCounts;
@@ -107,54 +96,30 @@ namespace JOLO_FileManager
         private string GetVowelOutputs(int[] vowelCounts)
         {
             StringBuilder sb = new();
+            string[] vowels = { "A", "E", "I", "O", "U", "Y" };
 
-            if (vowelCounts[0] != 1) // [0] == A's
+            for (int i = 0; i < vowelCounts.Length; i++)
             {
-                sb.Append($"{vowelCounts[0]} As, ");
-            }
-            else
-            {
-                sb.Append("1 A, ");
-            }
-            if (vowelCounts[1] != 1) // [1] == E's
-            {
-                sb.Append($"{vowelCounts[1]} Es, ");
-            }
-            else
-            {
-                sb.Append("1 E, ");
-            }
-            if (vowelCounts[2] != 1) // [2] == I's
-            {
-                sb.Append($"{vowelCounts[2]} Is, ");
-            }
-            else
-            {
-                sb.Append("1 I, ");
-            }
-            if (vowelCounts[3] != 1) // [3] == O's
-            {
-                sb.Append($"{vowelCounts[3]} Os, ");
-            }
-            else
-            {
-                sb.Append("1 O, ");
-            }
-            if (vowelCounts[4] != 1) // [4] == U's
-            {
-                sb.Append($"{vowelCounts[4]} Us, ");
-            }
-            else
-            {
-                sb.Append("1 U, ");
-            }
-            if (vowelCounts[5] != 1) // [5] == Y's
-            {
-                sb.Append($"{vowelCounts[5]} Ys");
-            }
-            else
-            {
-                sb.Append("1 Y");
+                if (i == 5)
+                {
+                    if (vowelCounts[i] != 1)
+                    {
+                        sb.Append($"{vowelCounts[i]} Ys");
+                    }
+                    else
+                    {
+                        sb.Append($"1 Y");
+                    }
+                    break;
+                }
+                if (vowelCounts[0] != 1)
+                {
+                    sb.Append($"{vowelCounts[i]} {vowels[i]}s, ");
+                }
+                else
+                {
+                    sb.Append($"1 {vowels[i]}, ");
+                }
             }
             return sb.ToString();
         }

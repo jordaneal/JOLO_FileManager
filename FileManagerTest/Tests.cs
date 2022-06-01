@@ -8,8 +8,12 @@ namespace FileManagerTest
     [TestClass]
     public class Tests
     {
+        // THE VOWEL TESTS ARE COMMENTED OUT BELOW. FOR 100% COVERAGE,
+        // THE METHODS IN FILEMANAGER WILL NEED TO BE MADE PUBLIC/STATIC
+
         private static string? _filePath = null;
         private static string? _filePathTwo = null;
+        private static string? _emptyDIR = null;
 
         [ClassInitialize]
         public static void Initialize(TestContext context)
@@ -25,6 +29,17 @@ namespace FileManagerTest
                 .Parent.Parent.Parent.ToString(),
                 @"Files\MoreFiles\",                                 // folder
                 context.Properties["FileOne"].ToString()!);          // name
+
+            _emptyDIR = Path.Combine(
+                Directory.GetParent(Directory.GetCurrentDirectory()) // dir
+                .Parent.Parent.Parent.ToString(),
+                @"Files\Empty\");                                    // folder
+        }
+        [TestMethod]
+        public void EmptyFolderPASS()
+        {
+            FileManager fm = new(_emptyDIR!);
+            Assert.AreEqual("No files in DIR", fm.LargestFileInCurrentDirectory());
         }
         [TestMethod]
         public void FileExistsPASS()
@@ -76,38 +91,6 @@ namespace FileManagerTest
             Assert.AreEqual("0 As, 0 Es, 0 Is, 0 Os, 0 Us, 0 Ys", 
                 fm.VowelWeight());
         }
-
-        // Methods below require scoping change in FileManager, scoped for release build
-        // change methods in FM to public/static for testing
-
-        //[TestMethod]
-        //public void GetVowelOutputALLONES()
-        //{
-        //    int[] allOnes = { 1, 1, 1, 1, 1, 1 };
-        //    Assert.AreEqual("1 A, 1 E, 1 I, 1 O, 1 U, 1 Y", 
-        //        FileManager.GetVowelOutputs(allOnes));
-        //}
-        //[TestMethod]
-        //public void GetVowelOutputALLNINES()
-        //{
-        //    int[] allNines = { 9, 9, 9, 9, 9, 9 };
-        //    Assert.AreEqual("9 As, 9 Es, 9 Is, 9 Os, 9 Us, 9 Ys", 
-        //        FileManager.GetVowelOutputs(allNines));
-
-        //}
-        //[TestMethod]
-        //public void GetVowelCountALLZEROS()
-        //{
-        //    int[] allZeros = { 0, 0, 0, 0, 0, 0 };
-        //    CollectionAssert.AreEqual(allZeros, FileManager.GetVowelCounts(""));
-        //}
-        //[TestMethod]
-        //public void GetVowelCountALLTHREES()
-        //{
-        //    int[] allThrees = { 3, 3, 3, 3, 3, 3 };
-        //    CollectionAssert.AreEqual(allThrees, 
-        //        FileManager.GetVowelCounts("aaaeeeiiiooouuuyyy"));
-        //}
         [TestMethod]
         public void FileNamePASS()
         {
@@ -153,5 +136,37 @@ namespace FileManagerTest
             string output = fm.ToString();
             Assert.IsNotNull(output);
         }
+
+        // Methods below require scoping change in FileManager, scoped for release build
+        // change methods in FM to public/static for testing
+
+        //[TestMethod]
+        //public void GetVowelOutputALLONES()
+        //{
+        //    int[] allOnes = { 1, 1, 1, 1, 1, 1 };
+        //    Assert.AreEqual("1 A, 1 E, 1 I, 1 O, 1 U, 1 Y",
+        //        FileManager.GetVowelOutputs(allOnes));
+        //}
+        //[TestMethod]
+        //public void GetVowelOutputALLNINES()
+        //{
+        //    int[] allNines = { 9, 9, 9, 9, 9, 9 };
+        //    Assert.AreEqual("9 As, 9 Es, 9 Is, 9 Os, 9 Us, 9 Ys",
+        //        FileManager.GetVowelOutputs(allNines));
+
+        //}
+        //[TestMethod]
+        //public void GetVowelCountALLZEROS()
+        //{
+        //    int[] allZeros = { 0, 0, 0, 0, 0, 0 };
+        //    CollectionAssert.AreEqual(allZeros, FileManager.GetVowelCounts("", out int[] count));
+        //}
+        //[TestMethod]
+        //public void GetVowelCountALLTHREES()
+        //{
+        //    int[] allThrees = { 3, 3, 3, 3, 3, 3 };
+        //    CollectionAssert.AreEqual(allThrees,
+        //        FileManager.GetVowelCounts("aaaeeeiiiooouuuyyy", out int[] count));
+        //}
     }
 }
