@@ -7,7 +7,7 @@ namespace JOLO_FileManager
         public string FilePath { get; set; }
         public FileManager(string filePath)
         {
-            FilePath = filePath ?? throw new ArgumentNullException(nameof(filePath));
+            FilePath = filePath ?? throw new ArgumentNullException(nameof(filePath)); // If null throw ex
         }
         public bool FileExists()
         {
@@ -15,22 +15,22 @@ namespace JOLO_FileManager
         }
         public string DirectoryName()
         {
-            return Directory.GetParent(FilePath!).Name;
+            return Directory.GetParent(FilePath).Name;
         }
         public string LargestFileInCurrentDirectory()
         {
-            FileInfo[] files = Directory.GetParent(FilePath!).GetFiles();
-
-            if (files.Length == 0)
+            FileInfo[] files = Directory.GetParent(FilePath).GetFiles(); 
+            // Stores files in FileInfo[] in ascending order of name by default
+            if (files.Length == 0) // No files in DIR logic
             {
                 return "No files in DIR";
             }
 
-            FileInfo largestFile = files[0]; 
+            FileInfo largestFile = files[0]; // Set first file as largest
 
             for (int i = 0; i < files.Length; i++)
             {
-                if (files[i].Length > largestFile.Length)
+                if (files[i].Length > largestFile.Length) // Replace largest if found
                 {
                     largestFile = files[i];
                 }    
@@ -39,31 +39,30 @@ namespace JOLO_FileManager
         }
         public string VowelWeight()
         {
-            // If not .txt, return all 0's
-            if (Path.GetExtension(FilePath) != ".txt") 
+            if (Path.GetExtension(FilePath) != ".txt") // If not .txt, return all 0's
             {
                 return "0 As, 0 Es, 0 Is, 0 Os, 0 Us, 0 Ys";
             }
-            // Count vowels (Method Below)
-             GetVowelCounts(File.ReadAllText(FilePath!).ToLower(), out int[] vowelCounts);
+            // Count vowels and store in a int[] (Method Below)
+            GetVowelCounts(File.ReadAllText(FilePath).ToLower(), out int[] vowelCounts);
             // Output vowels in correct format (Method Below)
             return GetVowelOutputs(vowelCounts);
         }
         public string FileName()
         {
-            return Path.GetFileNameWithoutExtension(FilePath!);
+            return Path.GetFileNameWithoutExtension(FilePath);
         }
         public string FileExtension()
         {
-            return Path.GetExtension(FilePath!);
+            return Path.GetExtension(FilePath);
         }
         public byte[]? GetByteArray()
         {
-            return File.ReadAllBytes(FilePath!);
+            return File.ReadAllBytes(FilePath);
         }
         public override string ToString()
         {
-            FileInfo fileInfo = new(FilePath!);
+            FileInfo fileInfo = new(FilePath); // Grab info via FileInfo of the file path
             return
                 $"File Path: {FilePath}\n" +
                 $"Size: {fileInfo.Length}\n" +
@@ -72,16 +71,16 @@ namespace JOLO_FileManager
         }
         public static int[] GetVowelCounts(string allText, out int[] vowelCounts)
         {
-            vowelCounts = new int[6]; // Store the 6 vowels 0-5 alphabetically
+            vowelCounts = new int[6]; // Vowels are stored 0-5 alphabetically
             char[] vowels = { 'a', 'e', 'i', 'o', 'u', 'y' };
 
-            for (int i = 0; i < allText.Length; i++)
+            for (int i = 0; i < allText.Length; i++) // Each char in text document
             {
-                for (int j = 0; j < vowels.Length; j++)
+                for (int j = 0; j < vowels.Length; j++) // Check for a match with every vowel
                 {
                     if (allText[i] == vowels[j])
                     {
-                        vowelCounts[j]++;
+                        vowelCounts[j]++; // Increment count
                         break;
                     }
                 }
@@ -91,30 +90,26 @@ namespace JOLO_FileManager
         public static string GetVowelOutputs(int[] vowelCounts)
         {
             StringBuilder sb = new();
-            string[] vowels = { "A", "E", "I", "O", "U", "Y" };
+            string[] vowels = { "A", "E", "I", "O", "U", "Y" }; // Keeping consistant vowel format throughout class
 
             for (int i = 0; i < vowelCounts.Length; i++)
             {
-                if (i == 5)
+                if (i == 5) // If on last vowel, do not add ", " @ end
                 {
                     if (vowelCounts[i] != 1)
                     {
                         sb.Append($"{vowelCounts[i]} Ys");
+                        break;
                     }
-                    else
-                    {
-                        sb.Append($"1 Y");
-                    }
+                    sb.Append($"1 Y");
                     break;
                 }
-                if (vowelCounts[0] != 1)
+                if (vowelCounts[i] != 1) // If not 1 vowel, use plural
                 {
-                    sb.Append($"{vowelCounts[i]} {vowels[i]}s, ");
+                    sb.Append($"{vowelCounts[i]} {vowels[i]}s, "); // Add ", " on end for formatting
+                    continue;
                 }
-                else
-                {
-                    sb.Append($"1 {vowels[i]}, ");
-                }
+                sb.Append($"1 {vowels[i]}, ");
             }
             return sb.ToString();
         }
